@@ -311,6 +311,7 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
                 open={openMini}
                 anchorEl={anchorEl}
                 placement="right-start"
+                placeholder='right-start'
                 style={{
                   zIndex: 2001
                 }}
@@ -398,6 +399,7 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
                 open={openMini}
                 anchorEl={anchorEl}
                 placement="right-start"
+                placeholder='right-start'
                 style={{
                   zIndex: 2001
                 }}

@@ -232,6 +232,7 @@ const NavGroup = ({ item, lastItem, remItems, lastItemId }: NavGroupProps) => {
                 open={openMini}
                 anchorEl={anchorEl}
                 placement="bottom-start"
+                placeholder='bottom-start'
                 style={{
                   zIndex: 2001
                 }}
