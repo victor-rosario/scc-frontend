@@ -1,27 +1,24 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { BiomedicalSliceI } from './biomedical.interface'
-import updateBiomedicalReducer from './update.reducer'
-import resetBiomedicalReducer from './reset-data.reducer'
-
-export const biomedicalSliceInitialState: BiomedicalSliceI = {
-    payload: {},
-    modal: {
-        open: false,
-        mode: 'view'
-    }
-}
+import { biomedicalSliceInitialState } from './data.biomedical'
+import {
+    resetPayloadBiomedicalReducer
+} from './reset-data.reducer'
+import {
+    updatePayloadBiomedicalReducer
+} from './update.reducer'
 
 export const biomedicalSlice = createSlice({
     initialState: biomedicalSliceInitialState,
     name: 'biomedical',
     reducers: {
-        updateBiomedical: updateBiomedicalReducer,
-        resetBiomedical: resetBiomedicalReducer
+        updatePayloadBiomedical: updatePayloadBiomedicalReducer,
+        resetPayloadBiomedical: resetPayloadBiomedicalReducer
     }
 })
 
 export const {
-    updateBiomedical,
-    resetBiomedical
+    updatePayloadBiomedical,
+    resetPayloadBiomedical
 } = biomedicalSlice.actions
+
 export default biomedicalSlice.reducer

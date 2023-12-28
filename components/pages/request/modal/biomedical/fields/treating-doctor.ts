@@ -1,9 +1,10 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
+import { IBioMedicalPayload } from "@providers/biomedical/biomedical.interface";
 
-export const treatingDoctor: FieldConfig<any>[] = [
+export const treatingDoctor: FieldConfig<IBioMedicalPayload>[] = [
     {
         label: "Nombre",
-        name: "treatingPhysicianInfo.firstName",
+        name: "treatingPhysician_firstName",
         type: "text",
         responsive: {
             xs: 6
@@ -11,7 +12,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Apellido",
-        name: "treatingPhysicianInfo.lastName",
+        name: "treatingPhysician_lastName",
         type: "text",
         responsive: {
             xs: 6
@@ -19,7 +20,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Exequatur",
-        name: "treatingPhysicianInfo.exequatur",
+        name: "treatingPhysician_exequatur",
         type: "text",
         responsive: {
             xs: 4
@@ -27,7 +28,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Especialidad",
-        name: "treatingPhysicianInfo.specialty",
+        name: "treatingPhysician_specialty",
         type: "text",
         responsive: {
             xs: 8
@@ -35,7 +36,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "PSS",
-        name: "treatingPhysicianInfo.pss",
+        name: "treatingPhysician_pss",
         type: "text",
         responsive: {
             xs: 12
@@ -43,7 +44,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Región de salud",
-        name: "treatingPhysicianInfo.healthRegion",
+        name: "treatingPhysician_healthRegion",
         type: "text",
         responsive: {
             xs: 4
@@ -51,7 +52,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Área",
-        name: "treatingPhysicianInfo.healthArea",
+        name: "treatingPhysician_healthArea",
         type: "text",
         responsive: {
             xs: 4
@@ -59,7 +60,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Zona",
-        name: "treatingPhysicianInfo.healthZone",
+        name: "treatingPhysician_healthZone",
         type: "text",
         responsive: {
             xs: 4
@@ -67,7 +68,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Teléfono",
-        name: "treatingPhysicianInfo.phoneNumber",
+        name: "treatingPhysician_phoneNumber",
         type: "tel",
         responsive: {
             xs: 6
@@ -75,7 +76,7 @@ export const treatingDoctor: FieldConfig<any>[] = [
     },
     {
         label: "Fecha del informe",
-        name: "treatingPhysicianInfo.reportDate",
+        name: "treatingPhysician_reportDate",
         type: "date",
         responsive: {
             xs: 6

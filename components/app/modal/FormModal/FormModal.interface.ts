@@ -57,7 +57,7 @@ export interface FieldConfig<T> {
 	startAdornment?: React.JSX.Element
 	disabled?: boolean
 	placeholder?: string
-	value?: string | OptionIFieldConfigI[] | File | File[]
+	value?: string | string[] | File | File[]
 	isEditMode?: boolean
 	handleChange?: (value: string | NonNullable<Entity<T>[keyof T]> | Dayjs | File) => void
 }

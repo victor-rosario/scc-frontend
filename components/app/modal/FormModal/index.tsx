@@ -61,7 +61,7 @@ const FormModal = <T extends object>({
 	return (
 		<Dialog open={open} onClose={onClose} maxWidth={maxWith} fullWidth PaperProps={{ sx: { borderRadius: 4 } }}>
 			<DialogTitle>
-				{entityName}
+				{mode === 'create' ? `${"Crear"} ${entityName}` : mode === 'edit' ? `${"Editar"} ${entityName}` : `${"Ver"} ${entityName}`}
 			</DialogTitle>
 			<DialogContent>
 				<Grid container>
@@ -89,7 +89,7 @@ const FormModal = <T extends object>({
 			</DialogContent>
 			<DialogActions sx={{ paddingRight: "34px" }}>
 				<Button onClick={handleClose} variant='outlined' sx={{ borderRadius: 50, width: "15%" }} size='large'>
-					Cancelar
+					Cerrar
 				</Button>
 				{isEditMode && (
 					<Button onClick={handleSubmit} variant="contained" sx={{ borderRadius: 50, width: "15%" }}>

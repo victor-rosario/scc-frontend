@@ -15,10 +15,9 @@ export const openCaseModalPayload = ({
 
     return {
         open: true,
-        maxWith: "lg",
         message: {
             subtitle1: {
-                message: "Solicitud creado correctamente"
+                message: "Caso creado correctamente"
             },
             caseNumber: {
                 message: "Número de caso: 134568798",
@@ -33,11 +32,11 @@ export const openCaseModalPayload = ({
         },
         buttons: {
             cancel: {
-                title: "Entendido",
+                title: "Cerrar",
                 callback: cancelCallback
             },
             new: {
-                title: "Crear nueva solicitud",
+                title: "Crear nuevo caso",
                 callback: newCallback
             }
         }

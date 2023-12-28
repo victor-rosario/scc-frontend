@@ -13,8 +13,10 @@ export interface EntityStepModalPropsI<T> extends ExcludeProperties<FormInputPro
 	entity: Entity<T> | null | undefined
 	onClose: () => void
 	onCreate: (data: T) => void
+	onValidStep?: (data: T, step: number) => boolean
 	onSave?: (data: T) => void
 	entityName: string
 	maxWith?: MaxWithType
+	resetStep?: boolean
 	stepFields: IStepField<T>[]
 }

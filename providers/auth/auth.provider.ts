@@ -15,6 +15,10 @@ class AuthProvider extends Base {
 		return await this.post('/signout')
 	}
 
+	async me(): Promise<unknown> {
+		return await this.get('/me')
+	}
+
 }
 
 const authProvider = new AuthProvider()

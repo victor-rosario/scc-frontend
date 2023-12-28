@@ -1,9 +1,17 @@
-interface IRequestPayload {
-    isRepresentative: boolean
-    isInstitution: boolean
-    isPatient: boolean
+import { IRequest, IRequestPayload } from "@providers/request/request.interface"
+
+export interface IPayloadRequest extends IRequestPayload {
+    role: {
+        slug: string
+        roleUUID: string
+    }
 }
 
 export interface RequestSliceI {
-    payload: IRequestPayload | null
+    payload: IPayloadRequest,
+    data: IRequest | null,
+    list: {
+        data: IRequest[]
+        count: number
+    }
 }

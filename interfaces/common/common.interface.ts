@@ -15,9 +15,7 @@ export interface ErrorI {
 
 
 export interface ProviderGetOptionsI {
-	companyUUID?: string
-	branchOfficeUUID?: string
-	warehouseUUID?: string
+	time?: string
 	filter?: ObjectKeyDynamicI
 	search?: string
 	dates?: {

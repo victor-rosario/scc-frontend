@@ -2,19 +2,16 @@ import {
   Box,
   Button,
   FormControl,
-  Grid,
   FormHelperText,
   IconButton,
   InputAdornment,
   OutlinedInput,
-  Typography,
   FormLabel
 } from '@mui/material';
 
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AnimateButton from '@components/app/extended/AnimateButton';
-import Link from '@components/app/Link';
 import { MouseEvent, useState } from 'react';
 import formValidation from '@utils/validation/formValidation';
 import { ErrorFormatterIntoObject } from '@utils/validation/errorFormatter';
@@ -23,13 +20,14 @@ import { useRouter } from 'next/router';
 import { signInRules } from './login.settings';
 import { openSnackbar } from '@redux/slices/ui/snackbar';
 import { useAppDispatch } from '@redux/store';
+import authProvider from '@providers/auth/auth.provider';
 
 const Login = () => {
 
   const router = useRouter()
   const dispatch = useAppDispatch()
 
-  const [formData, setFormData] = useState<SignInPayloadI>({ password: "", email: "" })
+  const [formData, setFormData] = useState<SignInPayloadI>({ password: "", identification: "" })
   const [errors, setErrors] = useState({} as SignInPayloadI)
 
   const [showPassword, setShowPassword] = useState(false);
@@ -41,35 +39,37 @@ const Login = () => {
     return isValid
   }
 
-  const requestLogin = async (_payload: SignInPayloadI) => {
+  const requestLogin = async (payload: SignInPayloadI) => {
 
-    dispatch(
-      openSnackbar({
+    authProvider.signIn(payload).then(() => {
+
+      dispatch(
+        openSnackbar({
+          open: true,
+          message: "Iniciar sesión exitosamente",
+          variant: 'alert',
+          alert: {
+            color: 'success'
+          },
+          close: false
+        })
+      );
+
+      router.reload()
+
+    }).catch(e => {
+      dispatch(openSnackbar({
         open: true,
-        message: "Login Successfully",
+        message: `Error: ${e.message}`,
         variant: 'alert',
         alert: {
-          color: 'success'
+          color: 'error'
         },
-        close: false
-      })
-    );
 
-    // router.reload()
-    router.push("/")
+        close: true,
+      }))
+    })
 
-    // dispatch(
-    //   openSnackbar({
-    //     open: true,
-    //     message: `Error: ${err.message}`,
-    //     variant: 'alert',
-    //     alert: {
-    //       color: 'error'
-    //     },
-
-    //     close: true,
-    //   })
-    // )
   }
   const handleMouseDownPassword = (event: MouseEvent) => {
     event.preventDefault()!;
@@ -90,20 +90,20 @@ const Login = () => {
     <form noValidate onSubmit={handleSubmit}>
       <FormControl
         fullWidth
-        error={Boolean(errors.email)}
+        error={Boolean(errors.identification)}
       >
-        <FormLabel htmlFor="outlined-adornment-email-login">Correo electrónico</FormLabel>
+        <FormLabel htmlFor="outlined-adornment-identification-login">Correo electrónico</FormLabel>
         <OutlinedInput
-          id="outlined-adornment-email-login"
+          id="outlined-adornment-identification-login"
           type="email"
-          value={formData.email}
-          name="email"
+          value={formData.identification}
+          name="identification"
           onChange={handleChange}
           inputProps={{}}
         />
-        {errors.email && (
-          <FormHelperText error id="standard-weight-helper-text-email-login">
-            {errors.email}
+        {errors.identification && (
+          <FormHelperText error id="standard-weight-helper-text-identification-login">
+            {errors.identification}
           </FormHelperText>
         )}
       </FormControl>
@@ -143,7 +143,7 @@ const Login = () => {
         )}
       </FormControl>
 
-      <Grid container alignItems="center" justifyContent="space-between" paddingTop={1}>
+      {/* <Grid container alignItems="center" justifyContent="space-between" paddingTop={1}>
         <Grid item>
           <Typography
             variant="subtitle1"
@@ -155,7 +155,7 @@ const Login = () => {
             Contraseña olvidada
           </Typography>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <Box sx={{ mt: 2 }}>
         <AnimateButton>

@@ -1,11 +1,6 @@
 import { BiomedicalSliceI } from "./biomedical.interface"
+import { initialPayloadBiomedical } from "./data.biomedical"
 
-const resetBiomedical = (state: BiomedicalSliceI) => {
-    state.payload = {}
-    state.modal = {
-        mode: 'create',
-        open: false
-    }
+export const resetPayloadBiomedicalReducer = (state: BiomedicalSliceI) => {
+    state.payload = initialPayloadBiomedical
 }
-
-export default resetBiomedical

@@ -13,6 +13,7 @@ import contextualReducer from '../slices/whodas/contextual'
 import whodaFormReducer from '../slices/whodas/form'
 import whodaQuestionReducer from '../slices/whodas/question'
 import requestReducer from '../slices/request'
+import modalReducer from '../slices/modal'
 
 const rootReducer = combineReducers({
 	me: meReducer,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
 	contextual: contextualReducer,
 	whodaForm: whodaFormReducer,
 	whodaQuestion: whodaQuestionReducer,
-	request: requestReducer
+	request: requestReducer,
+	modal: modalReducer
 });
 
 export const store = configureStore({

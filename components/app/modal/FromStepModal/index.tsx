@@ -1,4 +1,3 @@
-
 import {
 	Button,
 	Dialog,
@@ -6,10 +5,13 @@ import {
 	DialogContent,
 	DialogTitle,
 	Grid,
+	IconButton,
 	Step,
 	StepLabel,
-	Stepper
+	Stepper,
+	Typography
 } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import { Fragment, useEffect, useState } from 'react';
 import FormInput from '../FormModal/FormInput';
 import { Entity, FieldConfig } from '../FormModal/FormModal.interface';
@@ -23,21 +25,35 @@ const FormStepModal = <T extends object>({
 	onClose,
 	onCreate,
 	onSave,
+	onValidStep,
 	entityName,
 	maxWith = 'xs',
 	stepFields,
+	resetStep = false
 }: EntityStepModalPropsI<T>) => {
 
 	const [form, setForm] = useState<Entity<T>>({} as Entity<T>)
 	const [isEditMode, setIsEditMode] = useState(false)
 	const [activeStep, setActiveStep] = useState(0);
+	const [errorIndex, setErrorIndex] = useState<number | null>(null)
 
 	const handleBack = () => {
+		errorIndex && setErrorIndex(null)
 		setActiveStep((prevStep) => prevStep - 1);
 	}
 
 	const handleNext = () => {
-		setActiveStep((prevStep) => prevStep + 1);
+		const nextStep = activeStep + 1
+
+		if (typeof onValidStep === 'function') {
+			const isValidStep = onValidStep(form as Entity<T>, nextStep)
+			if (isValidStep) {
+				return setErrorIndex(nextStep - 1)
+			}
+		}
+
+		setErrorIndex(null)
+		setActiveStep(nextStep);
 	}
 
 	const handleClose = () => {
@@ -48,12 +64,18 @@ const FormStepModal = <T extends object>({
 
 	const handleSubmit = () => {
 
-		if (activeStep !== stepFields.length - 1) return
+		if (activeStep !== (stepFields.length - 1)) return
 
 		if (mode === 'create') onCreate?.(form as T)
 		if (mode === 'edit') onSave?.(form as T)
-		setForm({} as Entity<T>)
-		setActiveStep(0)
+
+		if (!resetStep) return
+
+		const timeOut = setTimeout(() => {
+			setActiveStep(0)
+			setForm({} as Entity<T>)
+			clearTimeout(timeOut)
+		}, 2 * 1000)
 	}
 
 	const formContent = (step: number) => {
@@ -64,8 +86,8 @@ const FormStepModal = <T extends object>({
 
 		const data = isArray ? (
 			<FormInput<T>
-				isEditMode={true}
-				setIsEditMode={() => { }}
+				isEditMode={isEditMode}
+				setIsEditMode={setIsEditMode}
 				fields={stepField.fields as FieldConfig<T>[]}
 				errors={errors}
 				form={form}
@@ -97,12 +119,21 @@ const FormStepModal = <T extends object>({
 			setForm(defaultFormState)
 			setIsEditMode?.(mode === 'create' || mode === 'edit')
 		}
-	}, [mode, JSON.stringify(entity)])
+	}, [mode, JSON.stringify(entity), activeStep])
 
 	return (
-		<Dialog open={open} onClose={onClose} maxWidth={maxWith} fullWidth PaperProps={{ sx: { borderRadius: 4 } }}>
+		<Dialog open={open} maxWidth={maxWith} fullWidth PaperProps={{ sx: { borderRadius: 4 } }}>
 			<DialogTitle>
-				{entityName}
+				<Grid container display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+					<Grid item>
+						{entityName}
+					</Grid>
+					<Grid item>
+						<IconButton onClick={handleClose}>
+							<CloseIcon color='error' />
+						</IconButton>
+					</Grid>
+				</Grid>
 			</DialogTitle>
 			<DialogContent>
 				<Grid container>
@@ -112,19 +143,26 @@ const FormStepModal = <T extends object>({
 						alternativeLabel
 						sx={{ paddingBottom: 2, flex: 1, justifyContent: "center" }}
 					>
-						{stepFields.map((stepField, index) => (
-							<Step key={`step-${index}`} >
+						{stepFields.map((stepField, index) => {
 
-								{typeof stepField.label === 'string' && (
-									<StepLabel>{stepField.label}</StepLabel>
-								)}
+							const labelProps: { error?: boolean; optional?: React.ReactNode } = {};
 
-								{typeof stepField.label !== 'string' && (
-									<StepLabel>{stepField.label}</StepLabel>
-								)}
+							if (index === errorIndex) {
+								labelProps.optional = (
+									<Typography variant="caption" color="error">
+										Favor en completar los datos
+									</Typography>
+								);
 
-							</Step>
-						))}
+								labelProps.error = true;
+							}
+
+							return (
+								<Step key={`step-${index}`}>
+									<StepLabel {...labelProps} >{stepField.label}</StepLabel>
+								</Step>
+							)
+						})}
 					</Stepper>
 					{formContent(activeStep)}
 				</Grid>

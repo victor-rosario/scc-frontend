@@ -21,7 +21,6 @@ import {
     useMediaQuery
 } from '@mui/material'
 import GetAppIcon from '@mui/icons-material/GetApp';
-import { ONE_REQUEST } from '../../../dummy/request.data';
 
 const RequestProfile = () => {
     const theme = useTheme()
@@ -70,7 +69,7 @@ const RequestProfile = () => {
                                         })
                                     }}
                                 >
-                                    <Typography variant='h2'>{ONE_REQUEST.fullName}</Typography>
+                                    <Typography variant='h2'>John Wick</Typography>
                                 </Grid>
                                 <Grid
                                     item
@@ -83,7 +82,7 @@ const RequestProfile = () => {
                                         })
                                     }}
                                 >
-                                    <Typography variant='inherit'>{ONE_REQUEST.email}</Typography>
+                                    <Typography variant='inherit'>john-wick@example.com</Typography>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -94,23 +93,23 @@ const RequestProfile = () => {
                             <TableBody>
                                 <TableRow>
                                     <TableCell variant="head">Cédula</TableCell>
-                                    <TableCell>{ONE_REQUEST.identification}</TableCell>
+                                    <TableCell>001-0057793-3</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head">Teléfono</TableCell>
-                                    <TableCell>{ONE_REQUEST.phone}</TableCell>
+                                    <TableCell>+1 849-555-8888</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head">Celular</TableCell>
-                                    <TableCell>{ONE_REQUEST.mobile}</TableCell>
+                                    <TableCell>+1 849-666-8888</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head">Edad</TableCell>
-                                    <TableCell>{ONE_REQUEST.age} años</TableCell>
+                                    <TableCell>37 años</TableCell>
                                 </TableRow>
                                 <TableRow>
                                     <TableCell variant="head">Sexo</TableCell>
-                                    <TableCell>{ONE_REQUEST.gender}</TableCell>
+                                    <TableCell>Masculino</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
@@ -421,6 +420,7 @@ const RequestProfile = () => {
                                         <Grid item>
                                             <Button
                                                 variant='contained'
+                                                color='error'
                                                 startIcon={<GetAppIcon />}
                                                 onClick={onDownload}
                                             >
@@ -430,7 +430,6 @@ const RequestProfile = () => {
                                         <Grid item>
                                             <Button
                                                 variant='contained'
-                                                color='error'
                                                 startIcon={<GetAppIcon />}
                                                 onClick={onDownload}
                                             >

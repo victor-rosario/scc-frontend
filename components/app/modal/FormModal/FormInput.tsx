@@ -89,10 +89,6 @@ const FormInput = <T extends object>({
                             {field.type === 'divider' && (
                                 <Divider
                                     variant='fullWidth'
-                                // sx={{
-                                //     backgroundColor: theme.palette.dark.dark,
-                                //     height: 1.6
-                                // }}
                                 >
                                     {field.label && (
                                         <Typography variant="subtitle1" color="textSecondary">
@@ -276,7 +272,7 @@ const FormInput = <T extends object>({
                                         name={String(name)}
                                         id={`field-${field.type}-${String(name)}`}
                                         value={field?.value || form[name] || ''}
-                                        placeholder={field.placeholder}
+                                        placeholder={field.placeholder || field.label}
                                         disabled={field.disabled ? field.disabled : !isEditMode}
                                         error={errors && errors[name] ? true : false}
                                         onChange={(e) => {
@@ -309,6 +305,7 @@ const FormInput = <T extends object>({
                                     <Autocomplete
                                         id={`field-${field.type}-${String(name)}`}
                                         multiple
+                                        placeholder={field.placeholder}
                                         options={field.options || []}
                                         getOptionLabel={(option) => option.label}
                                         value={(field.options || []).filter(option => ((field.value || form[name] || []) as string[]).includes(option.value))}
@@ -339,7 +336,7 @@ const FormInput = <T extends object>({
                                             htmlFor={`field-${field.type}-${String(name)}`}
                                             sx={{ color: '#000' }}
                                         >
-                                            <Typography textAlign={'left'} variant="body1" fontSize={"0.850rem"} fontWeight={500} width={'100%'}>
+                                            <Typography sx={{ cursor: 'pointer' }} textAlign={'justify'} variant="body1" fontSize={"0.850rem"} fontWeight={500} width={'100%'}>
                                                 {field.placeholder || field.label}
                                             </Typography>
                                         </FormLabel>
@@ -363,10 +360,6 @@ const FormInput = <T extends object>({
                                     <Grid item xs={12} paddingTop={.5}>
                                         <Divider
                                             variant='fullWidth'
-                                        // sx={{
-                                        //     backgroundColor: theme.palette.dark.dark,
-                                        //     height: 1.6
-                                        // }}
                                         />
                                     </Grid>
                                 </Grid>

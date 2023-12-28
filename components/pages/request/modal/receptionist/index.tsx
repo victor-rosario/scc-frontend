@@ -6,37 +6,47 @@ import {
     DialogTitle,
     Typography,
     useTheme,
-    Grid
+    Grid,
+    IconButton
 } from '@mui/material';
-import { EntityReceptionistModalPropsI } from './ModalReceptionist.interface';
+import CloseIcon from '@mui/icons-material/Close';
 import ReceptionistTable from './table';
 import { useState } from 'react';
+import { dispatch, useAppSelector } from '@redux/store';
+import { resetOneRequestModal } from '@redux/slices/modal';
 import FormInput from '@components/app/modal/FormModal/FormInput';
 import { documentRequest } from '../create-case/fields';
+import { IPayloadRequest } from '@redux/slices/request/request.interface';
 
-const ModalReceptionist = <T extends object>({
-    open,
-    onClose,
-    onSubmit,
-    entityName,
-}: EntityReceptionistModalPropsI<T>) => {
+const ModalReceptionist = () => {
 
     const theme = useTheme()
 
-    const [form, setForm] = useState<any>({})
+    const { requestInfo } = useAppSelector(x => x.modal)
+    const { data } = useAppSelector(x => x.request)
+
+    const [form, setForm] = useState<IPayloadRequest>({} as IPayloadRequest)
 
     const handleClose = () => {
-        onClose()
+        dispatch(resetOneRequestModal())
     }
 
     const handleSubmit = () => {
-        onSubmit()
     }
 
     return (
-        <Dialog open={open} onClose={handleClose} maxWidth={'md'} fullWidth PaperProps={{ sx: { borderRadius: 4 } }}>
+        <Dialog open={requestInfo.open} maxWidth={'md'} fullWidth PaperProps={{ sx: { borderRadius: 4 } }}>
             <DialogTitle sx={{ color: theme.palette.primary.main, fontWeight: "700", fontSize: 24 }}>
-                {entityName}
+                <Grid container display={'flex'} justifyContent={'space-between'} alignItems={'center'}>
+                    <Grid item>
+                        {data?.fullName}
+                    </Grid>
+                    <Grid item>
+                        <IconButton onClick={handleClose}>
+                            <CloseIcon color='error' />
+                        </IconButton>
+                    </Grid>
+                </Grid>
             </DialogTitle>
             <DialogContent>
                 <Grid container spacing={2}>
@@ -45,18 +55,16 @@ const ModalReceptionist = <T extends object>({
                             <Grid item>
                                 <Typography sx={{ paddingLeft: 1 }} variant="h6">Datos del paciente</Typography>
                             </Grid>
-                            <ReceptionistTable />
+                            <ReceptionistTable request={data} />
                         </Grid>
                         <Grid container item sx={{ paddingTop: 3 }}>
                             <Grid item>
                                 <Typography sx={{ paddingLeft: 1 }} variant="h6">Datos del paciente</Typography>
                             </Grid>
                             <Grid item sx={{ paddingTop: 1 }}>
-                                <FormInput<any>
+                                <FormInput<IPayloadRequest>
                                     form={form}
                                     setForm={setForm}
-                                    errors={null}
-                                    isEditMode={true}
                                     fields={documentRequest}
                                 />
                             </Grid>

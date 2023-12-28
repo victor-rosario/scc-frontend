@@ -1,7 +1,6 @@
 export const signInRules = {
-	email: {
-		isRequired: { message: 'Correo electrónico es requerido' },
-		isEmailValid: { message: 'Correo electrónico no es válido' }
+	identification: {
+		isRequired: { message: 'Correo electrónico o cédula es requerido' }
 	},
 	password: {
 		isRequired: { message: 'Contraseña es requerida' }

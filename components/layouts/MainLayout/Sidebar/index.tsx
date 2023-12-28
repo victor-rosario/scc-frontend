@@ -1,6 +1,6 @@
 import { CSSProperties, memo, useMemo } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Box, Drawer, useMediaQuery } from '@mui/material';
+import { Box, Divider, Drawer, useMediaQuery } from '@mui/material';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import MenuList from '../MenuList';
 import LogoSection from '../LogoSection';
@@ -20,6 +20,14 @@ const Sidebar = () => {
   const { drawerOpen } = useAppSelector((state) => state.menu);
   const { drawerType } = useConfig();
 
+  const drawerSX: CSSProperties = {
+    paddingLeft: drawerOpen ? '16px' : 0,
+    paddingRight: drawerOpen ? '16px' : 0,
+    marginTop: 0,
+    borderRadius: "0 15px 0 0",
+    backgroundColor: "#fff",
+  };
+
   const logo = useMemo(
     () => (
       <Box sx={{ display: 'flex', p: 2 }}>
@@ -30,17 +38,10 @@ const Sidebar = () => {
   );
 
   const drawerContent = (
-    <>
+    <Box>
       <MenuList />
-    </>
+    </Box>
   );
-
-  const drawerSX: CSSProperties = {
-    paddingLeft: drawerOpen ? '16px' : 0,
-    paddingRight: drawerOpen ? '16px' : 0,
-    marginTop: drawerOpen ? 0 : '20px',
-    borderRadius: 50
-  };
 
   const drawer = useMemo(
     () => (
@@ -68,7 +69,8 @@ const Sidebar = () => {
       component="nav"
       sx={{
         flexShrink: { md: 0 },
-        width: matchUpMd ? drawerWidth : 'auto'
+        width: matchUpMd ? drawerWidth : 'auto',
+        backgroundColor: "#eef2f6",
       }}
       aria-label="mailbox folders"
     >
@@ -83,7 +85,6 @@ const Sidebar = () => {
               mt: matchDownMd ? 0 : 11,
               zIndex: 1099,
               width: drawerWidth,
-              background: theme.palette.background.default,
               color: theme.palette.text.primary,
               borderRight: 'none',
             }
@@ -92,11 +93,25 @@ const Sidebar = () => {
           color="inherit"
         >
           {matchDownMd && logo}
+          <Divider
+            sx={{
+              backgroundColor: "#EEF2F6",
+              height: 10,
+              borderColor: "transparent"
+            }}
+          />
           {drawer}
         </Drawer>
       ) : (
         <MiniDrawerStyled variant="permanent" open={drawerOpen}>
           {logo}
+          <Divider
+            sx={{
+              backgroundColor: "#EEF2F6",
+              height: 10,
+              borderColor: "transparent"
+            }}
+          />
           {drawer}
         </MiniDrawerStyled>
       )}

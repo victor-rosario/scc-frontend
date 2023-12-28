@@ -5,8 +5,8 @@ import Snackbar from '@components/app/extended/Snackbar'
 import SweetAlert from '@components/app/extended/SweetAlert'
 import { AppPropsLayout } from '@interfaces/UI/app-with-layout/app-with-layout.interface'
 import { store } from '@redux/store'
-// import withAuthMiddleware from '@utils/middlewares/auth.middleware'
-// import { AppContext } from 'next/app'
+import withAuthMiddleware from '@utils/middlewares/auth.middleware'
+import { AppContext } from 'next/app'
 import { Fragment, useEffect, useState } from 'react'
 import { Provider } from 'react-redux'
 import { ConfigProvider } from '../contexts/general/ConfigContext'
@@ -53,6 +53,6 @@ function MyApp(props: AppPropsLayout) {
 	)
 }
 
-// MyApp.getInitialProps = async ({ ctx }: AppContext) => withAuthMiddleware(ctx)
+MyApp.getInitialProps = ({ ctx }: AppContext) => withAuthMiddleware(ctx)
 
 export default MyApp

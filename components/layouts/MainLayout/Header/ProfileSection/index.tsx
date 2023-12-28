@@ -22,10 +22,14 @@ import useConfig from '@hooks/useThemeConfig';
 import Transitions from '@components/app/extended/Transitions';
 import MainCard from '@components/app/cards/MainCard';
 import { profileMenuItems } from './profile-items.settings';
+import { useAppSelector } from '@redux/store';
 
 const User1 = '/assets/images/users/User-Pic.svg';
 
 const ProfileSection = () => {
+
+  const { account: accountLogged } = useAppSelector(x => x.me)
+
   const theme = useTheme();
   const { borderRadius } = useConfig();
   const [selectedIndex, setSelectedIndex] = useState(-1);
@@ -111,7 +115,6 @@ const ProfileSection = () => {
         color="primary"
       />
       <Popper
-        placeholder=''
         placement="bottom-end"
         open={open}
         anchorEl={anchorRef.current}
@@ -136,16 +139,16 @@ const ProfileSection = () => {
                     <Box sx={{ p: 2, pb: 0 }}>
                       <Stack>
                         <Stack direction="row" spacing={0.5} alignItems="center">
-                          <Typography variant="h4">Good Morning,</Typography>
+                          <Typography variant="h4">Buenos días,</Typography>
                           <Typography component="span" variant="h4" sx={{ fontWeight: 400 }}>
-                            Evaluador
+                            {accountLogged?.firstName || "Default"} {accountLogged?.lastName || "Default"}
                           </Typography>
                         </Stack>
-                        <Typography variant="subtitle2">Project Admin</Typography>
+                        <Typography variant="subtitle2">{accountLogged?.role?.name || "Admin"}</Typography>
                       </Stack>
                       <Divider />
                     </Box>
-                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 300px)', overflowX: 'hidden' }}>
+                    <PerfectScrollbar style={{ height: '100%', maxHeight: 'calc(100vh - 250px)', overflowX: 'hidden' }}>
                       <Box sx={{ p: 2, pt: 0 }}>
                         <List
                           component="nav"

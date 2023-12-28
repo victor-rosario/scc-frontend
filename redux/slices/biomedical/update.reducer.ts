@@ -1,9 +1,11 @@
 import { PayloadAction } from "@reduxjs/toolkit"
 import { BiomedicalSliceI } from "./biomedical.interface"
+import { IBioMedicalPayload } from "@providers/biomedical/biomedical.interface"
 
-const updateBiomedical = (state: BiomedicalSliceI, action: PayloadAction<Partial<BiomedicalSliceI>>) => {
-    if (action.payload.payload) state.payload = action.payload.payload
-    if (action.payload.modal) state.modal = action.payload.modal
+export const updatePayloadBiomedicalReducer = (state: BiomedicalSliceI, action: PayloadAction<Partial<IBioMedicalPayload>>) => {
+    state.payload = {
+        ...state.payload,
+        ...action.payload
+    }
+    return state
 }
-
-export default updateBiomedical

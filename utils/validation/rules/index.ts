@@ -30,6 +30,14 @@ const isRequired = (field: any, fields: any, { message }: any) => {
 	if (!fields[field] || !`${fields[field]}`.trim()) {
 		response.valid = false
 		response.error = message
+
+		return response
+	}
+
+	const isArray = Array.isArray(fields[field])
+	if (isArray && !fields[field].length) {
+		response.valid = false
+		response.error = message
 	}
 
 	return response
@@ -101,7 +109,7 @@ const isEqualPassword = (field: any, fields: any, { message }: any) => {
 }
 
 const isCheck = (field: any, fields: any, { message }: any) => {
-	if (!fields[field]) {
+	if (fields[field] === undefined || fields[field] === null || fields[field] === '') {
 		return { error: message, valid: false }
 	} else {
 		return { error: '', valid: true }
@@ -122,6 +130,14 @@ export const isPhoneNumberValid = (field: any, fields: any, { message }: any) =>
 	} else {
 		return { error: message, valid: false }
 	}
+}
+
+export const isNumberPositive = (field: any, fields: any, { message }: any) => {
+	if (fields[field] === '' || fields[field] < 0) {
+		return { error: message, valid: false }
+	}
+
+	return { error: "", valid: true }
 }
 
 const rulesFuncs = {

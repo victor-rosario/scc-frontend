@@ -1,19 +1,24 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
+import { GenderEnum, IRequestPayload, IdentificationEnum } from "@providers/request/request.interface";
 
-export const requestField: FieldConfig<any>[] = [
+export const requestField: FieldConfig<IRequestPayload>[] = [
     {
         label: "Documento de identidad",
-        name: "documentType",
+        name: "identificationType",
         type: 'select',
         options: [
             {
                 label: "Cédula",
-                value: "cedula"
+                value: IdentificationEnum.ID_CARD
             },
             {
                 label: "Pasaporte",
-                value: "pasaporte"
+                value: IdentificationEnum.PASSPORT
             },
+            {
+                label: "NUI",
+                value: IdentificationEnum.NUI
+            }
         ],
         responsive: {
             xs: 6
@@ -54,7 +59,7 @@ export const requestField: FieldConfig<any>[] = [
     },
     {
         label: "Celular",
-        name: "celular",
+        name: "mobile",
         type: 'tel',
         responsive: {
             xs: 6
@@ -70,7 +75,7 @@ export const requestField: FieldConfig<any>[] = [
     },
     {
         label: "Fecha de nacimiento",
-        name: "birthday",
+        name: "birthDate",
         type: 'date',
         responsive: {
             xs: 6
@@ -78,16 +83,16 @@ export const requestField: FieldConfig<any>[] = [
     },
     {
         label: "Sexo",
-        name: "sexo",
+        name: "gender",
         type: 'select',
         options: [
             {
                 label: "Masculino",
-                value: "male"
+                value: GenderEnum.MALE
             },
             {
                 label: "Femenino",
-                value: "female"
+                value: GenderEnum.FEMALE
             },
         ],
         responsive: {

@@ -22,6 +22,7 @@ const handleInitialProps = async ({ res, asPath }: NextPageContext) => {
 		return {
 			props: {
 				account: response.account || {},
+				isSuperAdmin: response.isSuperAdmin || false,
 				permissions: response.permissions || [],
 			}
 		}

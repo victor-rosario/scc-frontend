@@ -29,7 +29,6 @@ import useConfig from '@hooks/useThemeConfig';
 import { NavItemType } from '@interfaces/UI/general.interface';
 import { LAYOUT_CONST } from '@constants/layout';
 import { useAppSelector } from '@redux/store';
-import { useTranslation } from 'react-i18next';
 
 // mini-menu - wrapper
 const PopperStyledMini = styled(Popper)(({ theme }) => ({
@@ -98,7 +97,6 @@ interface NavCollapseProps {
 
 const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
 
-  const { t: tLayout } = useTranslation('layout')
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -288,7 +286,8 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
               <ListItemText
                 primary={
                   <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit" sx={{ my: 'auto' }}>
-                    {menu.id ? tLayout(menu.id) : menu.title}
+                    {/* {menu.id ? tLayout(menu.id) : menu.title} */}
+                    {menu.title}
                   </Typography>
                 }
                 secondary={
@@ -309,7 +308,6 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
 
             {!drawerOpen && (
               <PopperStyledMini
-                placeholder=''
                 open={openMini}
                 anchorEl={anchorEl}
                 placement="right-start"
@@ -387,7 +385,8 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
             <ListItemText
               primary={
                 <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit" sx={{ my: 'auto' }}>
-                  {menu.id ? tLayout(menu.id) : menu.title}
+                  {/* {menu.id ? tLayout(menu.id) : menu.title} */}
+                  {menu.title}
                 </Typography>
               }
             />
@@ -395,7 +394,6 @@ const NavCollapse = ({ menu, level, parentId }: NavCollapseProps) => {
 
             {anchorEl && (
               <PopperStyled
-                placeholder=''
                 id={popperId}
                 open={openMini}
                 anchorEl={anchorEl}

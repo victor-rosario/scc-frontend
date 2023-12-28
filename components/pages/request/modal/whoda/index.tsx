@@ -23,6 +23,7 @@ const WhodaForm = () => {
         <FormWhodaStepModal<any>
             maxWith="lg"
             entity={{}}
+            resetStep
             onCreate={handleSubmit}
             onClose={handleClose}
             stepFields={[

@@ -9,7 +9,6 @@ import useConfig from '@hooks/useThemeConfig';
 import { LinkTarget, NavItemType } from '@interfaces/UI/general.interface';
 import { activeID, activeItem, openDrawer } from '@redux/slices/ui/menu';
 import { useAppDispatch, useAppSelector } from '@redux/store';
-import { useTranslation } from 'react-i18next';
 import VisibilityPageByPermission from '@utils/permission/visibility-page-by-permission.util';
 
 interface NavItemProps {
@@ -25,8 +24,6 @@ export interface ListItemPropsI {
 }
 
 const NavItem = ({ item, level, parentId }: NavItemProps) => {
-
-  const { t: tLayout } = useTranslation('layout')
 
   const theme = useTheme();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
@@ -165,7 +162,8 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
             <ListItemText
               primary={
                 <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
-                  {item.id ? tLayout(item.id) : item.title}
+                  {/* {item.id ? tLayout(item.id) : item.title} */}
+                  {item.title}
                 </Typography>
               }
               secondary={
@@ -215,7 +213,8 @@ const NavItem = ({ item, level, parentId }: NavItemProps) => {
           <ListItemText
             primary={
               <Typography variant={isSelected ? 'h5' : 'body1'} color="inherit">
-                {item.id ? tLayout(item.id) : item.title}
+                {/* {item.id ? tLayout(item.id) : item.title} */}
+                {item.title}
               </Typography>
             }
             secondary={

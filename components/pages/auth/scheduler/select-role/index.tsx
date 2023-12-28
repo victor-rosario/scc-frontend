@@ -3,43 +3,38 @@ import {
     Grid,
     Typography,
 } from "@mui/material";
-import { updateRequest } from "@redux/slices/request";
-import { useAppDispatch } from "@redux/store";
-import { useEffect, useState } from "react";
 import EscalatorWarningRoundedIcon from '@mui/icons-material/EscalatorWarningRounded';
 import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
 import AccessibleRoundedIcon from '@mui/icons-material/AccessibleRounded';
+import { IRole } from "@providers/role/role.interface";
+import { addPayloadRequest } from "@redux/slices/request";
+import { dispatch } from "@redux/store";
+import { useState } from "react";
 
-const SelectPatientType = () => {
+const titleRole: Record<string, string[]> = {
+    patient: ["Solicitante"],
+    institution: ["Institución"],
+    representative: ["Tutor Legal"],
+}
 
-    const dispatch = useAppDispatch()
+interface ISelectPatientTypeProps {
+    roles: IRole[]
+}
 
-    const [active, setActive] = useState({
-        isRepresentative: false,
-        isInstitution: false,
-        isPatient: false
-    })
+const SelectPatientType = ({ roles }: ISelectPatientTypeProps) => {
 
-    const handleClickActive = (name: string, value: boolean) => {
+    const [role, setRole] = useState<IRole | null>(null)
 
-        const payload = {
-            isInstitution: false,
-            isPatient: false,
-            isRepresentative: false,
-            [name]: value
-        }
+    const handleClickActive = (data: IRole) => {
+        setRole(data)
 
-        setActive(payload)
+        dispatch(addPayloadRequest({
+            role: {
+                roleUUID: data.uuid,
+                slug: data.slug
+            }
+        }))
     }
-
-    useEffect(() => {
-
-        const { isInstitution, isPatient, isRepresentative } = active
-        if (!isInstitution && !isPatient && !isRepresentative) return
-
-        dispatch(updateRequest({ payload: { ...active } }))
-
-    }, [active])
 
     return (
         <Grid item xs={12}>
@@ -47,57 +42,37 @@ const SelectPatientType = () => {
                 <Grid item xs={12}>
                     <Grid container>
                         <Grid container spacing={1} justifyContent={'space-around'} alignItems={'center'}>
-                            <Grid item>
-                                <Button
-                                    type="button"
-                                    onClick={() => handleClickActive("isRepresentative", !active.isRepresentative)}
-                                    variant={active.isRepresentative ? 'contained' : 'text'}
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'column',
-                                        padding: 2
-                                    }}
-                                >
-                                    <EscalatorWarningRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />
-                                    <Typography textAlign={'center'} variant="h2" color={active.isRepresentative ? '#fff' : "#000"}>Tutor Legal</Typography>
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    type="button"
-                                    onClick={() => handleClickActive("isInstitution", !active.isInstitution)}
-                                    variant={active.isInstitution ? 'contained' : 'text'}
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'column',
-                                        padding: 2
-                                    }}
-                                >
-                                    <AccountBalanceRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />
-                                    <Typography textAlign={'center'} variant="h2" color={active.isInstitution ? '#fff' : "#000"}>Institución</Typography>
-                                </Button>
-                            </Grid>
-                            <Grid item>
-                                <Button
-                                    type="button"
-                                    onClick={() => handleClickActive("isPatient", !active.isPatient)}
-                                    variant={active.isPatient ? 'contained' : 'text'}
-                                    sx={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        flexDirection: 'column',
-                                        padding: 2
-                                    }}
-                                >
-                                    <AccessibleRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />
-                                    <Typography textAlign={'center'} variant="h2" color={active.isPatient ? '#fff' : "#000"}>Solicitante</Typography>
-                                </Button>
-                            </Grid>
+                            {(roles || []).map(data => {
+
+                                const isValid = data.uuid === role?.uuid
+                                const isPatient = data?.slug === "patient"
+                                const isInstitution = data?.slug === "institution"
+                                const isRepresentative = data?.slug === "representative"
+
+                                return (
+                                    <Grid item key={`${data.uuid}`}>
+                                        <Button
+                                            type="button"
+                                            onClick={() => handleClickActive(data)}
+                                            variant={isValid ? 'contained' : 'text'}
+                                            sx={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                flexDirection: 'column',
+                                                padding: 2
+                                            }}
+                                        >
+                                            {isPatient && <AccessibleRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />}
+                                            {isRepresentative && <EscalatorWarningRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />}
+                                            {isInstitution && <AccountBalanceRoundedIcon width={100} height={100} sx={{ fontSize: 100 }} />}
+                                            {titleRole[data.slug || 'institution'].map(title => (
+                                                <Typography key={`${title}`} textAlign={'center'} variant="h2" color={isValid ? '#fff' : "#000"}>{title}</Typography>
+                                            ))}
+                                        </Button>
+                                    </Grid>
+                                )
+                            })}
                         </Grid>
                     </Grid>
                 </Grid>

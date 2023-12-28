@@ -1,19 +1,41 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { requestSliceInitialState } from './data.request'
-import resetRequestReducer from './reset-data.reducer'
-import updateRequestReducer from './update.reducer'
+import {
+    updateOneListReducer,
+    updatePayloadReducer,
+    addOneListReducer,
+    updateListReducer,
+    updateDataReducer
+} from './update.reducer'
+import {
+    resetListRequestReducer,
+    resetPayloadRequestReducer,
+    resetDataRequestReducer
+} from './reset.reducer'
 
 export const requestSlice = createSlice({
     initialState: requestSliceInitialState,
     name: 'requests',
     reducers: {
-        updateRequest: updateRequestReducer,
-        resetRequest: resetRequestReducer
+        addDataRequest: updateDataReducer,
+        addPayloadRequest: updatePayloadReducer,
+        updateListRequest: updateListReducer,
+        addOneRequest: addOneListReducer,
+        updateOneRequest: updateOneListReducer,
+        resetPayloadRequest: resetPayloadRequestReducer,
+        resetListRequest: resetListRequestReducer,
+        resetDataRequest: resetDataRequestReducer
     }
 })
 
 export const {
-    resetRequest,
-    updateRequest
+    addOneRequest,
+    addDataRequest,
+    addPayloadRequest,
+    resetListRequest,
+    resetPayloadRequest,
+    updateListRequest,
+    updateOneRequest,
+    resetDataRequest
 } = requestSlice.actions
 export default requestSlice.reducer

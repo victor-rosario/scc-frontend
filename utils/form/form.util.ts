@@ -9,10 +9,10 @@ export const getValueTypeOfInput = (target: any) => {
 }
 
 export const assignValueToObject = (text: string, value: any, _data: object) => {
-    let keys = text.split(".");
+    const keys = text.split(".");
     keys.shift();
 
-    let len = keys.length - 1;
+    const len = keys.length - 1;
 
     return keys.reduce((a, b, i) => {
         a += `{"${b}"${i > (len - 1) ? `:${value}` : ""}${i == len ? "}".repeat(len + 1) : ""}${i < len ? ":" : ""}`
@@ -22,9 +22,9 @@ export const assignValueToObject = (text: string, value: any, _data: object) => 
 
 export const inputFormToJSON = (target: HTMLFormElement): any => {
     return [...Array.from(target.querySelectorAll("input")), ...Array.from(target.querySelectorAll("textarea"))].reduce((a: ObjectKeyDynamicI, b) => {
-        let name = b.name;
-        let names = name.split(".");
-        let value = getValueTypeOfInput(b);
+        const name = b.name;
+        const names = name.split(".");
+        const value = getValueTypeOfInput(b);
         if (names.length > 1) {
             a[names[0]] = {
                 ...(a[names[0]]),
@@ -39,8 +39,8 @@ export const inputFormToJSON = (target: HTMLFormElement): any => {
     }, {})
 }
 
-export interface ValidatePasswordI{
-    message: string 
+export interface ValidatePasswordI {
+    message: string
     type: 'poor' | 'average' | 'strong'
     percentage: string
     color: string
@@ -70,35 +70,35 @@ export const validatePassword = (password: string): ValidatePasswordI => {
             percentage: percentagePoor,
             color: colorPoor
         }
-    }else if (!uppercase.test(password)) {
+    } else if (!uppercase.test(password)) {
         return {
             message: "Average password: Must contain at least one uppercase letter",
             type: "average",
             percentage: percentageAverage,
             color: colorAverage
         }
-    }else if (!lowercase.test(password)) {
+    } else if (!lowercase.test(password)) {
         return {
             message: "Average Password: Must contain at least one lowercase letter",
             type: "average",
             percentage: percentageAverage,
             color: colorAverage
         }
-    }else if (!digits.test(password)) {
+    } else if (!digits.test(password)) {
         return {
             message: "Average password: Must contain at least one digit",
             type: "average",
             percentage: percentageAverage,
             color: colorAverage
         }
-    }else if (!specialCharacters.test(password)) {
+    } else if (!specialCharacters.test(password)) {
         return {
             message: "Average password: Must contain at least one special character",
             type: "average",
             percentage: percentageAverage,
             color: colorAverage
         }
-    }else{
+    } else {
         return {
             message: "Your password is great.",
             type: "strong",

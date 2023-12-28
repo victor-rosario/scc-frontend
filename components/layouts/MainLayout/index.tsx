@@ -13,6 +13,7 @@ import { MainLayoutPropsI } from '../layout.interface';
 import Header from './Header';
 import HorizontalBar from './HorizontalBar';
 import Sidebar from './Sidebar';
+import { setMeData } from '@redux/slices/me';
 
 interface MainStyleProps {
   theme: Theme;
@@ -76,8 +77,7 @@ const MainLayout = ({ children }: MainLayoutPropsI) => {
   const theme = useTheme();
   const matchDownMd = useMediaQuery(theme.breakpoints.down('md'));
 
-  // const accountProps = children?.props;
-  // const isSuperAdmin = useMemo(() => accountProps?.account?.isSuper || false, [accountProps?.account])
+  const accountProps = children?.props;
 
   const dispatch = useAppDispatch();
   const { drawerOpen } = useAppSelector((state) => state.menu);
@@ -91,31 +91,18 @@ const MainLayout = ({ children }: MainLayoutPropsI) => {
     }
   }, [drawerType]);
 
-  // useEffect(() => {
-  //   if (!accountProps) return
-  //   if (!accountProps?.account) return
-  //   if (Object.keys(accountProps?.account || {}).length === 0) return
+  useEffect(() => {
+    if (!accountProps) return
+    if (!accountProps?.account) return
+    if (Object.keys(accountProps?.account || {}).length === 0) return
 
-  //   authProvider.getPermission().then((res) => {
-  //     dispatch(setMeData({
-  //       account: accountProps.account,
-  //       permissions: res.permissions,
-  //       company: accountProps?.account?.company || null,
-  //       isSuperAdmin: accountProps.account?.isSuper || false
-  //     }))
-  //   }).catch(() => {
-  //     dispatch(setMeData({
-  //       account: accountProps.account,
-  //       permissions: [],
-  //       isSuperAdmin: accountProps.account?.isSuper || false,
-  //       company: accountProps?.account?.company || null,
-  //     }))
-  //   })
-  // }, [
-  //   JSON.stringify(children?.props?.account),
-  //   JSON.stringify(children?.props?.account?.company),
-  //   JSON.stringify(children?.props?.permissions),
-  // ])
+    dispatch(setMeData({
+      account: accountProps.account,
+      isSuperAdmin: accountProps.isSuperAdmin || false
+    }))
+  }, [
+    JSON.stringify(children?.props?.account),
+  ])
 
   useEffect(() => {
     if (drawerType === LAYOUT_CONST.DEFAULT_DRAWER) {
@@ -146,7 +133,13 @@ const MainLayout = ({ children }: MainLayoutPropsI) => {
     <Fragment>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
-        <AppBar enableColorOnDark position="fixed" color="inherit" elevation={0} sx={{ bgcolor: theme.palette.background.default }}>
+        <AppBar
+          enableColorOnDark
+          position="fixed"
+          color="inherit"
+          elevation={0}
+          sx={{ bgcolor: theme.palette.background.default }}
+        >
           {header}
         </AppBar>
 
@@ -159,7 +152,6 @@ const MainLayout = ({ children }: MainLayoutPropsI) => {
           open={drawerOpen}
           layout={layout}>
           <Container maxWidth={container ? 'lg' : false} {...(!container && { sx: { px: { xs: 0 } } })}>
-            {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
             {children}
           </Container>
         </Main>

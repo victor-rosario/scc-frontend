@@ -9,7 +9,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   borderRight: 'none',
   zIndex: 1099,
-  background: theme.palette.background.default,
+  background: "#eef2f6",
   overflowX: 'hidden',
   boxShadow: theme.palette.mode === 'dark' ? theme.customShadows.z1 : 'none',
   transition: theme.transitions.create('width', {
@@ -21,7 +21,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 const closedMixin = (theme: Theme): CSSObject => ({
   borderRight: 'none',
   zIndex: 1099,
-  background: theme.palette.background.default,
+  background: "#eef2f6",
   overflowX: 'hidden',
   width: 72,
   transition: theme.transitions.create('width', {

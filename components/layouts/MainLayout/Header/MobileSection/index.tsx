@@ -61,7 +61,6 @@ const MobileSection = () => {
       </Box>
 
       <Popper
-        placeholder=''
         placement="bottom-end"
         open={open}
         anchorEl={anchorRef.current}

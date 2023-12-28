@@ -41,3 +41,40 @@ export const isHoliday = (time: Dayjs): boolean => {
 
   return false
 };
+
+export const isValidScheduleDate = (time: string | number | Date): boolean => {
+
+  const dateTime = new Date(time)
+  const date = new Date()
+
+  return date.getTime() >= dateTime.getTime()
+}
+
+export function calculateAge(birthDate: Date): { years: number, months: number, days: number } {
+  const today = new Date();
+
+  let years = today.getFullYear() - birthDate.getFullYear();
+  let months = today.getMonth() - birthDate.getMonth();
+  let days = today.getDate() - birthDate.getDate();
+
+  if (days < 0) {
+    months--;
+    const lastMonthDays = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+    days += lastMonthDays;
+  }
+
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  const isWithinOneDay = days === 0 && months === 0 && years === 0;
+
+  if (years < 0 || isWithinOneDay) {
+    years = 0;
+    months = 0;
+    days = 0;
+  }
+
+  return { years, months, days };
+}

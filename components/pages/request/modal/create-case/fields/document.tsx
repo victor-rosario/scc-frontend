@@ -1,33 +1,34 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import { IPayloadRequest } from "@redux/slices/request/request.interface";
 
-export const documentRequest: FieldConfig<any>[] = [
+export const documentRequest: FieldConfig<IPayloadRequest>[] = [
     {
         label: "Documento de identificación (Cédula / Pasaporte / Acta de nacimiento)",
-        name: "document-file",
+        name: "identificationDocument",
         type: "file",
-        startAdornment: <AttachFileIcon color="primary" />,
-        placeholder: "Insertar documento (PDF o Imagen)",
+        startAdornment: <PictureAsPdfIcon color="error" />,
+        placeholder: "Insertar documento (PDF)",
         responsive: {
             xs: 12
         }
     },
     {
         label: "Ficha de Evaluación Biomédica",
-        name: "biomedical-file",
+        name: "biomedicalEvaluation",
         type: "file",
-        startAdornment: <AttachFileIcon color="primary" />,
-        placeholder: "Insertar documento (PDF o Imagen)",
+        startAdornment: <PictureAsPdfIcon color="error" />,
+        placeholder: "Insertar documento (PDF)",
         responsive: {
             xs: 6
         }
     },
     {
         label: "Estudios complementarios",
-        name: "studios-file",
+        name: "complementaryStudy",
         type: "file",
-        startAdornment: <AttachFileIcon color="primary" />,
-        placeholder: "Insertar documento (PDF o Imagen)",
+        startAdornment: <PictureAsPdfIcon color="error" />,
+        placeholder: "Insertar documento (PDF)",
         responsive: {
             xs: 6
         }

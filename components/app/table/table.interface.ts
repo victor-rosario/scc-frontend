@@ -1,6 +1,6 @@
 
 import { ObjectKeyDynamicI } from "@interfaces/common/common.interface"
-import { ReactNode } from "react"
+import React, { ReactNode } from "react"
 
 export interface ParamsRenderItemChildrenColumnsTableI<T> {
     data: T
@@ -39,6 +39,7 @@ export interface PaginationTablePropsI {
 
 export interface TablePropsI<T> {
     errorMessage?: string
+    loading?: boolean
     withHover?: boolean
     columns: ItemChildrenColumnsTableI<T>[]
     data: ObjectKeyDynamicI[]

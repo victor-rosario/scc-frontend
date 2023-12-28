@@ -1,26 +1,29 @@
 import FormModal from "@components/app/modal/FormModal";
 import { Entity } from "@components/app/modal/FormModal/FormModal.interface";
-import { ModalModeType } from "@interfaces/modal/modal.interface";
+import { resetReevaluateModal } from "@redux/slices/modal";
+import { dispatch, useAppSelector } from "@redux/store";
 
-interface ReevaluateModalProps {
-    mode: ModalModeType
-    open: boolean
-    setOpenModal: (isOpen: boolean) => void
-}
+const ReevaluateModal = () => {
 
-const ReevaluateModal: React.FC<ReevaluateModalProps> = ({ mode, open, setOpenModal }) => {
+    const { reevaluate } = useAppSelector(x => x.modal)
+
+    const handleClose = () => {
+        dispatch(resetReevaluateModal())
+    }
+
+    const handleSubmit = () => { }
 
     return (
 
         <FormModal
-            entity={{} as Entity<any>}
-            mode={mode}
+            open={reevaluate.open}
             maxWith="md"
-            open={open}
+            entity={{} as Entity<any>}
+            mode={reevaluate.mode}
             entityName="Reconsideración"
             errors={null}
-            onClose={() => setOpenModal(false)}
-            onCreate={() => setOpenModal(false)}
+            onClose={handleClose}
+            onCreate={handleSubmit}
             fields={[
                 {
                     label: "Motivo",
@@ -30,15 +33,14 @@ const ReevaluateModal: React.FC<ReevaluateModalProps> = ({ mode, open, setOpenMo
                         "Disconformidad con la notificación de denegación",
                         "Disconformidad con el contenido del certificado - Origen de la discapacidad",
                         "Disconformidad con el contenido del certificado - Existencia de la discapacidad",
-
                     ].map((option) => ({ label: option, value: option })),
                     responsive: {
                         xs: 12,
                     }
                 },
                 {
-                    label: "Justificar el motivo de la Reconsideración",
-                    placeholder: "Justificar el motivo de la Reconsideración",
+                    label: "Justificar el motivo de la Reeconsideración",
+                    placeholder: "Justificar el motivo de la Reeconsideración",
                     type: "textarea",
                     name: "motive1",
                     responsive: {

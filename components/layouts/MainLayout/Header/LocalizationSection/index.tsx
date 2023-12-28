@@ -16,7 +16,6 @@ import {
 import TranslateTwoToneIcon from '@mui/icons-material/TranslateTwoTone';
 import Transitions from '@components/app/extended/Transitions';
 import useConfig from '@hooks/useThemeConfig';
-import { useTranslation } from 'react-i18next';
 import { useAppDispatch, useAppSelector } from '@redux/store';
 import translateProvider from '@providers/translate/translate.provider';
 import { toast } from 'react-hot-toast';
@@ -25,7 +24,6 @@ import { languages as languagesObject } from '@utils/languages/languages-data.ut
 
 const LocalizationSection = () => {
 
-  const { t, i18n } = useTranslation('layout')
   const { borderRadius, locale, onChangeLocale } = useConfig();
 
   const dispatch = useAppDispatch()
@@ -62,9 +60,9 @@ const LocalizationSection = () => {
     setOpen(false);
   };
 
-  const handleChangeLanguage = (language: string) => {
-    if (i18n.language === language) return
-    i18n.changeLanguage(language)
+  const handleChangeLanguage = (_language: string) => {
+    // if (i18n.language === language) return
+    // i18n.changeLanguage(language)
   }
 
   const getLanguages = () => {
@@ -136,7 +134,6 @@ const LocalizationSection = () => {
       </Box>
 
       <Popper
-        placeholder=''
         placement={matchesXs ? 'bottom-start' : 'bottom'}
         open={open}
         anchorEl={anchorRef.current}
@@ -178,7 +175,7 @@ const LocalizationSection = () => {
                           <ListItemText
                             primary={
                               <Grid container>
-                                <Typography color="textPrimary">{t(`${languageName}`)}</Typography>
+                                <Typography color="textPrimary">{languageName}</Typography>
                                 <Typography variant="caption" color="textSecondary" sx={{ ml: '8px' }}>
                                   ({languageIso2})
                                 </Typography>

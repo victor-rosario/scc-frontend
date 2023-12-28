@@ -1,6 +1,12 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
+import { IBioMedicalPayload } from "@providers/biomedical/biomedical.interface";
+import { IDiseaseHistories } from "@providers/disease-histories/disease-histories.interface";
 
-export const perimeterBackground: FieldConfig<any>[] = [
+interface IPerimeterBackgroundProps {
+    diseaseHistories: IDiseaseHistories[]
+}
+
+export const perimeterBackground = ({ diseaseHistories }: IPerimeterBackgroundProps): FieldConfig<IBioMedicalPayload>[] => [
     {
         label: "Edad gestacional",
         name: "ageGestional",
@@ -16,7 +22,7 @@ export const perimeterBackground: FieldConfig<any>[] = [
             "Semana 29-32",
             "Semana 33-36",
             "Semana 37-40",
-        ].map((label) => ({ label, value: label })),
+        ].map((value) => ({ label: value, value })),
         responsive: {
             xs: 3
         },
@@ -67,16 +73,7 @@ export const perimeterBackground: FieldConfig<any>[] = [
         label: "Antecedentes perinatales de enfermedad",
         name: "perinatalDiseaseHistoryUUIDs",
         type: "multi-select",
-        options: [
-            "Asfixia al nacer",
-            "Distrés Respiratorio",
-            "Sepsis neonatal",
-            "Cianosis",
-            "Llanto débil al nacer",
-            "Diabetes",
-            "Cardiopatías",
-            "Nefropatías",
-        ].map((label) => ({ label, value: label })),
+        options: diseaseHistories.map(({ uuid, disease }) => ({ label: disease, value: uuid })),
         responsive: {
             xs: 9
         }
@@ -89,5 +86,5 @@ export const perimeterBackground: FieldConfig<any>[] = [
         responsive: {
             xs: 12
         }
-    }
+    },
 ]

@@ -1,43 +1,24 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
+import { GenderEnum, IRequestPayload, IdentificationEnum } from "@providers/request/request.interface";
 
-export const requestInstitutionField: FieldConfig<any>[] = [
-    {
-        label: "RNC",
-        name: "nrc",
-        type: 'text',
-        responsive: {
-            xs: 6
-        }
-    },
-    {
-        label: "Nombre de la institución que representa",
-        name: "institutoName",
-        type: 'text',
-        responsive: {
-            xs: 6
-        }
-    },
-    {
-        label: "",
-        name: "black",
-        type: "divider",
-        responsive: {
-            xs: 12
-        }
-    },
+export const requestInstitutionField: FieldConfig<IRequestPayload>[] = [
     {
         label: "Documento de identidad",
-        name: "documentType",
+        name: "applicant_identificationType",
         type: 'select',
         options: [
             {
                 label: "Cédula",
-                value: "cedula"
+                value: IdentificationEnum.ID_CARD
             },
             {
                 label: "Pasaporte",
-                value: "pasaporte"
+                value: IdentificationEnum.PASSPORT
             },
+            {
+                label: "NUI",
+                value: IdentificationEnum.NUI
+            }
         ],
         responsive: {
             xs: 6
@@ -45,7 +26,7 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Número de documento de identidad",
-        name: "identification",
+        name: "applicant_identification",
         placeholder: "000-0000000-0",
         type: 'text',
         responsive: {
@@ -53,16 +34,16 @@ export const requestInstitutionField: FieldConfig<any>[] = [
         }
     },
     {
-        label: "Nombre",
-        name: "firstName",
+        label: "RNC",
+        name: "applicant_rnc",
         type: 'text',
         responsive: {
             xs: 6
         }
     },
     {
-        label: "Apellidos",
-        name: "lastName",
+        label: "Nombre de la institución que representa",
+        name: "applicant_institutionName",
         type: 'text',
         responsive: {
             xs: 6
@@ -70,15 +51,31 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Cargo que ocupa dentro de la institución",
-        name: "",
+        name: "applicant_institutionPosition",
         type: 'text',
         responsive: {
             xs: 12
         }
     },
     {
+        label: "Nombre",
+        name: "applicant_firstName",
+        type: 'text',
+        responsive: {
+            xs: 6
+        }
+    },
+    {
+        label: "Apellido",
+        name: "applicant_lastName",
+        type: 'text',
+        responsive: {
+            xs: 6
+        }
+    },
+    {
         label: "Teléfono",
-        name: "phone",
+        name: "applicant_phone",
         type: 'tel',
         responsive: {
             xs: 6
@@ -86,7 +83,7 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Celular",
-        name: "celular",
+        name: "applicant_mobile",
         type: 'tel',
         responsive: {
             xs: 6
@@ -94,7 +91,7 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Correo electrónico",
-        name: "email",
+        name: "applicant_email",
         type: 'email',
         responsive: {
             xs: 12
@@ -102,7 +99,7 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Fecha de nacimiento",
-        name: "birthday",
+        name: "applicant_birthDate",
         type: 'date',
         responsive: {
             xs: 6
@@ -110,16 +107,16 @@ export const requestInstitutionField: FieldConfig<any>[] = [
     },
     {
         label: "Sexo",
-        name: "sexo",
+        name: "applicant_gender",
         type: 'select',
         options: [
             {
                 label: "Masculino",
-                value: "male"
+                value: GenderEnum.MALE
             },
             {
                 label: "Femenino",
-                value: "female"
+                value: GenderEnum.FEMALE
             },
         ],
         responsive: {

@@ -3,21 +3,29 @@ export interface MeAccountInformationI {
 	createdAt: string
 	email: string
 	active: boolean
-	validated: boolean
-	// TODO: ROlE
-	role: any
+	firstName: string
+	lastName: string
+	role: IRole
 	info: InfoI
-	isSuper?: boolean
 	tokenSocket: string
 }
 
-export interface InfoI {
-	uuid: string
-	createdAt: string
+interface IRole {
+	name: string
+	slug: string
+}
+
+interface InfoI {
 	userName: string
-	firstName: string
-	lastName: string
-	phoneNumber: string
-	mobilePhoneNumber: string
-	whatsAppPhoneNumber: string
+	nationality: string
+	identification: string
+	identificationType: string
+	birthDate: string
+	phone: string
+	mobile: string
+	gender: string
+	conversationAbility: boolean
+	institutionName: string
+	rnc: string
+	institutionPosition: string
 }

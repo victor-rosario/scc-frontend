@@ -7,20 +7,19 @@ import {
     Grid,
     Table as MaterialTable,
     Pagination,
+    Skeleton,
     TableBody,
     TableCell,
     TableContainer,
     TableRow,
     Typography
 } from '@mui/material'
+import Image from "next/image"
 import React, { useCallback, useEffect, useState } from "react"
-import { useTranslation } from "react-i18next"
 import { TablePropsI } from "./table.interface"
-import { StyledTableCell, StyledTableRow, StyledTableHead } from './table.style'
+import { StyledTableCell, StyledTableHead, StyledTableRow } from './table.style'
 
-function Table<T>({ columns, withHover = true, data, pagination, errorMessage }: TablePropsI<T>) {
-
-    const { t: tLayout } = useTranslation('layout')
+function Table<T>({ columns, withHover = true, loading = false, data, pagination, errorMessage }: TablePropsI<T>) {
 
     const [allCheckboxActive, setAllCheckboxActive] = useState(false)
     const [_data, setData] = useState<ObjectKeyDynamicI[]>([])
@@ -77,8 +76,7 @@ function Table<T>({ columns, withHover = true, data, pagination, errorMessage }:
                                         <column.RenderColumn />
                                     ) : (
                                         <Typography
-                                            variant="subtitle1"
-                                            fontWeight={700}
+                                            variant="body1"
                                             style={{ whiteSpace: "nowrap" }}
                                         >
                                             {column.title}
@@ -131,12 +129,23 @@ function Table<T>({ columns, withHover = true, data, pagination, errorMessage }:
                     </TableBody>
                 </MaterialTable>
             </TableContainer>
-            {!_data.length && (<>
+            {loading && (
+                <Grid sx={{ textAlign: "center", pb: 2, pt: 2 }}>
+                    <Grid container direction={'column'} gap={1}>
+                        {Array.from({ length: columns.length + 5 }).map((index) => (
+                            <Grid key={`skeleton-${index}`} item>
+                                <Skeleton variant="rounded" width={"100%"} height={50} animation="wave" />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Grid>
+            )}
+            {(_data.length === 0 && !loading) && (<>
                 <Box sx={{ textAlign: "center", pb: 2 }}>
                     <Box sx={{ p: 2, alignItems: "center", display: "flex", justifyContent: "center" }}>
-                        <img width={100} src="/assets/images/icons/empty.svg" alt="no-data-image" />
+                        <Image width={200} height={200} src="/assets/images/icons/empty.svg" alt="no-data-image" />
                     </Box>
-                    <Typography variant="h4">{errorMessage || tLayout("table-not-data")}</Typography>
+                    <Typography variant="h4">{errorMessage || "No hay data disponible"}</Typography>
                 </Box>
             </>)}
             {pagination && (

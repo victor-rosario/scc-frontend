@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import { Grid } from '@mui/material';
+import { Divider, Grid, Typography } from '@mui/material';
 
 import Link from '@components/app/Link';
 import Logo from '@components/app/Logo';
@@ -35,6 +35,16 @@ const Login = () => {
                 </Grid>
                 <Grid item xs={12}>
                   <AuthLogin />
+                </Grid>
+                <Grid item xs={12}>
+                  <Divider />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid item container direction="column" alignItems="flex-end" xs={12}>
+                    <Typography component={Link} href="/register" variant="subtitle1" sx={{ textDecoration: 'none' }}>
+                      Crear nueva cuenta
+                    </Typography>
+                  </Grid>
                 </Grid>
               </Grid>
             </AuthCardWrapper>

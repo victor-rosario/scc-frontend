@@ -1,42 +1,35 @@
 import { FieldConfig } from "@components/app/modal/FormModal/FormModal.interface";
+import { ICommunication } from "@providers/communication/communication.interface";
+import { IMotive } from "@providers/motive/motive.interface";
+import { IRequestPayload } from "@providers/request/request.interface";
 
-export const motiveRequest: FieldConfig<any>[] = [
+interface IMotiveRequest {
+    motives: IMotive[]
+    communications: ICommunication[]
+}
+
+export const motiveRequest = ({ communications, motives }: IMotiveRequest): FieldConfig<IRequestPayload>[] => [
     {
         label: "Motivo de la solicitud",
-        name: "motive",
+        name: "motiveUUIDs",
         type: "multi-select",
         responsive: {
             xs: 12
         },
-        options: [
-            "Accesos a beneficios educativos",
-            "Accesos a beneficios de Seguridad Social",
-            "Accesos a beneficios de Protección Social",
-            "Cuota laboral",
-            "Exoneración Impuestos",
-            "Solicitud dispositivos de apoyo",
-            "Fines bancarios",
-            "No sabe/ No responde"
-        ].map((label) => ({ label, value: label }))
+        options: motives.map((x) => ({ label: x.motive, value: x.uuid }))
     },
     {
         label: "¿Cuál es el código de comunicación utilizado por la persona a certificar?",
-        name: "communication",
+        name: "communicationUUIDs",
         type: "multi-select",
         responsive: {
             xs: 12
         },
-        options: [
-            "Lenguaje hablado",
-            "Lector o escritura",
-            "Lengua de Señas",
-            "Braille",
-            "Audio"
-        ].map(label => ({ label, value: label }))
+        options: communications.map((x) => ({ label: x.methods, value: x.uuid }))
     },
     {
         label: "¿La persona a certificar puede mantener una conversación con un adecuado nivel de atención por 1 hora (sin distraerse en exceso)?",
-        name: "isGood",
+        name: "conversationAbility",
         type: "select",
         options: [
             {

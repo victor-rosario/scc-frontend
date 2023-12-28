@@ -1,11 +1,5 @@
-import { ModalModeType } from "@interfaces/modal/modal.interface"
-
-export interface IBiomedicalModal {
-    open: boolean
-    mode: ModalModeType
-}
+import { IBioMedicalPayload } from "@providers/biomedical/biomedical.interface"
 
 export interface BiomedicalSliceI {
-    payload: any
-    modal: IBiomedicalModal
+    payload: IBioMedicalPayload
 }

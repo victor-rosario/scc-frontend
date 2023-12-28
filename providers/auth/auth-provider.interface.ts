@@ -1,6 +1,4 @@
-
 export interface SignInPayloadI {
-    email: string;
+    identification: string;
     password: string;
-    code?: string;
 }

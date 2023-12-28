@@ -7,15 +7,17 @@ import {
     Stepper,
     Typography
 } from '@mui/material'
-import React, { Fragment, useMemo, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { IAuthSchedulerProps } from './scheduler.interface'
 import FormInput from '@components/app/modal/FormModal/FormInput'
 import { Entity, FieldConfig } from '@components/app/modal/FormModal/FormModal.interface'
-import { useAppSelector } from '@redux/store'
-import ThankYou from './thank-you'
 
 const AuthScheduler = <T extends object>({
-    stepFields
+    onValidStep,
+    onCreate,
+    thankYouPage,
+    stepFields,
+    resetSteps
 }: IAuthSchedulerProps<T>) => {
 
     const [errors, setErrors] = useState<Record<keyof T, any> | null | undefined>(null)
@@ -23,33 +25,30 @@ const AuthScheduler = <T extends object>({
     const [errorIndex, setErrorIndex] = useState<number | null>(null)
     const [activeStep, setActiveStep] = useState(0)
 
-    const { payload } = useAppSelector(x => x.request)
-    const { isInstitution, isPatient, isRepresentative } = useMemo(() => {
-
-        if (!payload) {
-            return { isInstitution: false, isPatient: false, isRepresentative: false }
-        }
-
-        return payload
-    }, [payload])
-
-    const handleFormValidation = () => {
-        if (!isInstitution && !isPatient && !isRepresentative) return false
-
-        return true
-    }
-
     const handleBack = () => {
-        setActiveStep(activeStep - 1)
+        errorIndex && setErrorIndex(null)
+        setActiveStep(prev => prev - 1)
     }
 
     const handleNext = () => {
-        if (!handleFormValidation()) {
-            setErrorIndex(activeStep)
-            return
+        const nextStep = activeStep + 1
+        if (typeof onValidStep === 'function') {
+            const isValidStep = onValidStep(form as Entity<T>, nextStep)
+            if (isValidStep) {
+                return setErrorIndex(nextStep - 1)
+            }
         }
+        setErrorIndex(null)
+        setActiveStep(nextStep)
+    }
 
-        setActiveStep(activeStep + 1)
+    const handleSubmit = () => {
+
+        if (activeStep !== stepFields.length - 1) return
+
+        onCreate(form as T)
+        setForm({} as Entity<T>)
+        resetSteps && setActiveStep(0)
     }
 
     const formContent = (step: number) => {
@@ -104,7 +103,7 @@ const AuthScheduler = <T extends object>({
             <>
                 {activeStep === stepFields.length ? (
                     <>
-                        <ThankYou />
+                        {thankYouPage}
                         <Stack direction="row" justifyContent="flex-end">
                             <AnimateButton>
                                 <Button
@@ -137,7 +136,7 @@ const AuthScheduler = <T extends object>({
                                 </Button>
                             )}
                             <AnimateButton>
-                                <Button variant="contained" onClick={handleNext} sx={{ my: 3, ml: 1 }}>
+                                <Button variant="contained" onClick={() => activeStep !== stepFields.length - 1 ? handleNext() : handleSubmit()} sx={{ my: 3, ml: 1 }}>
                                     {(activeStep === stepFields.length - 1) ? 'Agendar' : (activeStep === 0) ? 'Acepto' : 'Siguiente'}
                                 </Button>
                             </AnimateButton>
