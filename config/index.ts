@@ -8,4 +8,6 @@ const config = {
 	nameMeHeader: 'X-USER-DATA'
 }
 
+console.log("config: ", config)
+
 export default config
