@@ -305,7 +305,6 @@ const FormInput = <T extends object>({
                                     <Autocomplete
                                         id={`field-${field.type}-${String(name)}`}
                                         multiple
-                                        placeholder={field.placeholder}
                                         options={field.options || []}
                                         getOptionLabel={(option) => option.label}
                                         value={(field.options || []).filter(option => ((field.value || form[name] || []) as string[]).includes(option.value))}
