@@ -7,12 +7,12 @@ const ExclusiveTermUse = () => {
                 <Grid item xs={12}>
                     <Grid container>
                         <Grid container spacing={2} justifyContent={'space-around'} alignItems={'center'}>
-                            <Grid container item display={'flex'} justifyContent={'center'} alignItems={'center'} paddingBlock={.1}>
+                            <Grid container item display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                 <Typography textAlign={'center'} variant="h3">
                                     Solicitud de registro, certificación y valoración de discapacidad
                                 </Typography>
                             </Grid>
-                            <Grid container item display={'flex'} justifyContent={'center'} alignItems={'center'} paddingBlock={1.5}>
+                            <Grid container item display={'flex'} justifyContent={'center'} alignItems={'center'}>
                                 <Typography variant="h4" fontWeight={700} textAlign={'center'}>
                                     Este certificado será para uso exclusivo del usuario o representante.
                                 </Typography>
